@@ -208,6 +208,41 @@
 
     <section class="section">
       <h2>Les modules de gestion</h2>
+      
+<section class="section" id="gestion-eleves">
+  <h2>👨‍🎓 Gestion des élèves</h2>
+
+  <div class="form-eleve">
+    <input type="text" id="nomEleve" placeholder="Nom de l'élève">
+    <input type="text" id="prenomEleve" placeholder="Prénom de l'élève">
+
+    <select id="classeEleve">
+      <option value="">Choisir une classe</option>
+      <option value="TCS">Tronc commun scientifique</option>
+      <option value="1BAC SM">1BAC SM</option>
+      <option value="2BAC SM">2BAC SM</option>
+    </select>
+
+    <button class="btn" id="ajouterEleve">
+      + Ajouter l'élève
+    </button>
+  </div>
+
+  <div style="overflow-x:auto; margin-top:20px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Classe</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="listeEleves">
+      </tbody>
+    </table>
+  </div>
+</section>
       <div class="modules">
         <div class="module">
           <h3>👨‍🎓 Gestion des élèves</h3>
