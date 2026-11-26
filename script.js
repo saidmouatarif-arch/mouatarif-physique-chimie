@@ -1,23 +1,73 @@
-// MOUATARIF - Gestion pédagogique
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  console.log("Bienvenue sur MOUATARIF !");
+  const nomInput = document.getElementById("nomEleve");
+  const prenomInput = document.getElementById("prenomEleve");
+  const classeInput = document.getElementById("classeEleve");
+  const boutonAjouter = document.getElementById("ajouterEleve");
+  const listeEleves = document.getElementById("listeEleves");
 
-  // Navigation entre les menus
-  const menuLinks = document.querySelectorAll(".menu a");
+  let eleves = JSON.parse(localStorage.getItem("mouatarif_eleves")) || [];
 
-  menuLinks.forEach(link => {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
+  function afficherEleves() {
+    listeEleves.innerHTML = "";
 
-      menuLinks.forEach(item => item.classList.remove("active"));
+    eleves.forEach((eleve, index) => {
+      const ligne = document.createElement("tr");
 
-      this.classList.add("active");
+      [eleve.nom, eleve.prenom, eleve.classe].forEach(texte => {
+        const cellule = document.createElement("td");
+        cellule.textContent = texte;
+        ligne.appendChild(cellule);
+      });
 
-      const titre = this.textContent.trim();
-      document.querySelector("header h1").textContent = titre;
+      const action = document.createElement("td");
+      const supprimer = document.createElement("button");
+
+      supprimer.textContent = "Supprimer";
+      supprimer.className = "btn";
+      supprimer.style.background = "#d9534f";
+      supprimer.style.color = "white";
+
+      supprimer.addEventListener("click", function () {
+        if (confirm("Voulez-vous supprimer cet élève ?")) {
+          eleves.splice(index, 1);
+          sauvegarderEleves();
+        }
+      });
+
+      action.appendChild(supprimer);
+      ligne.appendChild(action);
+      listeEleves.appendChild(ligne);
     });
+  }
+
+  function sauvegarderEleves() {
+    localStorage.setItem("mouatarif_eleves", JSON.stringify(eleves));
+    afficherEleves();
+  }
+
+  boutonAjouter.addEventListener("click", function () {
+    const nom = nomInput.value.trim();
+    const prenom = prenomInput.value.trim();
+    const classe = classeInput.value;
+
+    if (!nom || !prenom || !classe) {
+      alert("Veuillez remplir tous les champs.");
+      return;
+    }
+
+    eleves.push({ nom, prenom, classe });
+
+    sauvegarderEleves();
+
+    nomInput.value = "";
+    prenomInput.value = "";
+    classeInput.value = "";
+
+    alert("Élève ajouté avec succès !");
   });
+
+  afficherEleves();
 
 });
