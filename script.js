@@ -71,3 +71,18 @@ document.addEventListener("DOMContentLoaded", function () {
   afficherEleves();
 
 });
+
+function mettreAJourStatistiques() {
+
+  const cartes = document.querySelectorAll(".cards .card");
+
+  const carteEleves = cartes[0];
+  const carteClasses = cartes[1];
+
+  const nombreClasses = new Set(
+    eleves.map(eleve => eleve.classe)
+  ).size;
+
+  carteEleves.querySelector("h2").textContent = eleves.length;
+  carteClasses.querySelector("h2").textContent = nombreClasses;
+}
