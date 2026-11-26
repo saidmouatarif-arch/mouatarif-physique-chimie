@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function sauvegarderEleves() {
     localStorage.setItem("mouatarif_eleves", JSON.stringify(eleves));
     afficherEleves();
+    function sauvegarderEleves() {
   }
 
   boutonAjouter.addEventListener("click", function () {
