@@ -6,7 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const classeInput = document.getElementById("classeEleve");
   const boutonAjouter = document.getElementById("ajouterEleve");
   const listeEleves = document.getElementById("listeEleves");
-
+const dateNaissanceInput = document.getElementById("dateNaissance");
+const parentInput = document.getElementById("parentEleve");
+const telephoneInput = document.getElementById("telephoneParent");
+const adresseInput = document.getElementById("adresseEleve");
+const observationsInput = document.getElementById("observationsEleve");
   let eleves = JSON.parse(
     localStorage.getItem("mouatarif_eleves") || "[]"
   );
