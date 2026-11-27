@@ -101,9 +101,14 @@ eleves.push({
 
       sauvegarderEleves();
 
-      nomInput.value = "";
-      prenomInput.value = "";
-      classeInput.value = "";
+nomInput.value = "";
+prenomInput.value = "";
+classeInput.value = "";
+dateNaissanceInput.value = "";
+parentInput.value = "";
+telephoneInput.value = "";
+adresseInput.value = "";
+observationsInput.value = "";
 
       alert("Élève ajouté avec succès !");
     });
