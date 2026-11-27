@@ -262,3 +262,112 @@ document.addEventListener("DOMContentLoaded", function () {
   afficherRemarques();
 
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const selectEleve = document.getElementById("eleveAbsence");
+  const dateInput = document.getElementById("dateAbsence");
+  const typeInput = document.getElementById("typeAbsence");
+  const dureeInput = document.getElementById("dureeAbsence");
+  const justificationInput = document.getElementById("justificationAbsence");
+  const motifInput = document.getElementById("motifAbsence");
+  const bouton = document.getElementById("ajouterAbsence");
+  const liste = document.getElementById("listeAbsences");
+
+  if (!selectEleve || !bouton || !liste) return;
+
+  const eleves = JSON.parse(
+    localStorage.getItem("mouatarif_eleves") || "[]"
+  );
+
+  let absences = JSON.parse(
+    localStorage.getItem("mouatarif_absences") || "[]"
+  );
+
+  dateInput.value = new Date().toLocaleDateString("en-CA");
+
+  function chargerEleves() {
+    selectEleve.innerHTML =
+      '<option value="">Choisir un élève</option>';
+
+    eleves.forEach((eleve, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent =
+        eleve.nom + " " + eleve.prenom + " - " + eleve.classe;
+
+      selectEleve.appendChild(option);
+    });
+  }
+
+  function afficherAbsences() {
+    liste.innerHTML = "";
+
+    absences.forEach(absence => {
+      const ligne = document.createElement("tr");
+
+      [
+        absence.date,
+        absence.eleve,
+        absence.type,
+        absence.duree + " h",
+        absence.justification,
+        absence.motif
+      ].forEach(contenu => {
+        const cellule = document.createElement("td");
+        cellule.textContent = contenu;
+        ligne.appendChild(cellule);
+      });
+
+      liste.appendChild(ligne);
+    });
+  }
+
+  bouton.addEventListener("click", function () {
+
+    const index = selectEleve.value;
+    const date = dateInput.value;
+    const type = typeInput.value;
+    const duree = Number(dureeInput.value);
+    const justification = justificationInput.value;
+    const motif = motifInput.value.trim();
+
+    if (
+      index === "" ||
+      !date ||
+      dureeInput.value === "" ||
+      !Number.isFinite(duree) ||
+      duree <= 0
+    ) {
+      alert("Veuillez sélectionner un élève et saisir une durée valide.");
+      return;
+    }
+
+    const eleve = eleves[index];
+
+    absences.push({
+      date: date,
+      eleve: eleve.nom + " " + eleve.prenom,
+      type: type,
+      duree: duree,
+      justification: justification,
+      motif: motif
+    });
+
+    localStorage.setItem(
+      "mouatarif_absences",
+      JSON.stringify(absences)
+    );
+
+    afficherAbsences();
+
+    dureeInput.value = "";
+    motifInput.value = "";
+
+    alert("Enregistrement effectué avec succès !");
+  });
+
+  chargerEleves();
+  afficherAbsences();
+
+});
