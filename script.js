@@ -170,3 +170,95 @@ document.addEventListener("DOMContentLoaded", function () {
   afficherNotes();
 
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const selectEleve = document.getElementById("eleveRemarque");
+  const dateInput = document.getElementById("dateRemarque");
+  const typeInput = document.getElementById("typeRemarque");
+  const texteInput = document.getElementById("texteRemarque");
+  const bouton = document.getElementById("ajouterRemarque");
+  const liste = document.getElementById("listeRemarques");
+
+  if (!selectEleve || !bouton || !liste) return;
+
+  const eleves = JSON.parse(
+    localStorage.getItem("mouatarif_eleves") || "[]"
+  );
+
+  let remarques = JSON.parse(
+    localStorage.getItem("mouatarif_remarques") || "[]"
+  );
+
+  dateInput.value = new Date().toLocaleDateString("en-CA");
+
+  function chargerEleves() {
+    selectEleve.innerHTML =
+      '<option value="">Choisir un élève</option>';
+
+    eleves.forEach((eleve, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent =
+        eleve.nom + " " + eleve.prenom + " - " + eleve.classe;
+
+      selectEleve.appendChild(option);
+    });
+  }
+
+  function afficherRemarques() {
+    liste.innerHTML = "";
+
+    remarques.forEach(remarque => {
+      const ligne = document.createElement("tr");
+
+      [
+        remarque.date,
+        remarque.eleve,
+        remarque.type,
+        remarque.texte
+      ].forEach(contenu => {
+        const cellule = document.createElement("td");
+        cellule.textContent = contenu;
+        ligne.appendChild(cellule);
+      });
+
+      liste.appendChild(ligne);
+    });
+  }
+
+  bouton.addEventListener("click", function () {
+    const index = selectEleve.value;
+    const date = dateInput.value;
+    const type = typeInput.value;
+    const texte = texteInput.value.trim();
+
+    if (index === "" || !date || !texte) {
+      alert("Veuillez remplir tous les champs.");
+      return;
+    }
+
+    const eleve = eleves[index];
+
+    remarques.push({
+      date: date,
+      eleve: eleve.nom + " " + eleve.prenom,
+      type: type,
+      texte: texte
+    });
+
+    localStorage.setItem(
+      "mouatarif_remarques",
+      JSON.stringify(remarques)
+    );
+
+    afficherRemarques();
+    texteInput.value = "";
+
+    alert("Remarque enregistrée avec succès !");
+  });
+
+  chargerEleves();
+  afficherRemarques();
+
+});
