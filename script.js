@@ -181,7 +181,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const liste = document.getElementById("listeRemarques");
 
   if (!selectEleve || !bouton || !liste) return;
-
+const eleves = JSON.parse(
+  localStorage.getItem("mouatarif_eleves") || "[]"
+);
   const eleves = JSON.parse(
     localStorage.getItem("mouatarif_eleves") || "[]"
   );
