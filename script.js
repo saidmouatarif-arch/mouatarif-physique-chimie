@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const boutonAjouter = document.getElementById("ajouterEleve");
   const listeEleves = document.getElementById("listeEleves");
 
-  let eleves = JSON.parse(localStorage.getItem("mouatarif_eleves")) || [];
+  let eleves = JSON.parse(
+    localStorage.getItem("mouatarif_eleves") || "[]"
+  );
 
   function afficherEleves() {
     listeEleves.innerHTML = "";
@@ -40,50 +42,54 @@ document.addEventListener("DOMContentLoaded", function () {
       ligne.appendChild(action);
       listeEleves.appendChild(ligne);
     });
+
+    mettreAJourStatistiques();
   }
 
   function sauvegarderEleves() {
-    localStorage.setItem("mouatarif_eleves", JSON.stringify(eleves));
+    localStorage.setItem(
+      "mouatarif_eleves",
+      JSON.stringify(eleves)
+    );
     afficherEleves();
-    function sauvegarderEleves() {
   }
 
-  boutonAjouter.addEventListener("click", function () {
-    const nom = nomInput.value.trim();
-    const prenom = prenomInput.value.trim();
-    const classe = classeInput.value;
+  function mettreAJourStatistiques() {
+    const cartes = document.querySelectorAll(".cards .card");
 
-    if (!nom || !prenom || !classe) {
-      alert("Veuillez remplir tous les champs.");
-      return;
+    if (cartes.length >= 2) {
+      const nombreClasses = new Set(
+        eleves.map(eleve => eleve.classe)
+      ).size;
+
+      cartes[0].querySelector("h2").textContent = eleves.length;
+      cartes[1].querySelector("h2").textContent = nombreClasses;
     }
+  }
 
-    eleves.push({ nom, prenom, classe });
+  if (boutonAjouter) {
+    boutonAjouter.addEventListener("click", function () {
+      const nom = nomInput.value.trim();
+      const prenom = prenomInput.value.trim();
+      const classe = classeInput.value;
 
-    sauvegarderEleves();
+      if (!nom || !prenom || !classe) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+      }
 
-    nomInput.value = "";
-    prenomInput.value = "";
-    classeInput.value = "";
+      eleves.push({ nom, prenom, classe });
 
-    alert("Élève ajouté avec succès !");
-  });
+      sauvegarderEleves();
+
+      nomInput.value = "";
+      prenomInput.value = "";
+      classeInput.value = "";
+
+      alert("Élève ajouté avec succès !");
+    });
+  }
 
   afficherEleves();
 
 });
-
-function mettreAJourStatistiques() {
-
-  const cartes = document.querySelectorAll(".cards .card");
-
-  const carteEleves = cartes[0];
-  const carteClasses = cartes[1];
-
-  const nombreClasses = new Set(
-    eleves.map(eleve => eleve.classe)
-  ).size;
-
-  carteEleves.querySelector("h2").textContent = eleves.length;
-  carteClasses.querySelector("h2").textContent = nombreClasses;
-}
