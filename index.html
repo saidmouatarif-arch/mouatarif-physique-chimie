@@ -356,9 +356,71 @@
 </div>
 
         <div class="module">
-          <h3>📅 Absences</h3>
-          <p>Suivre les absences et les retards.</p>
-        </div>
+         
+<div class="module">
+  <h3>📅 Gestion des absences et retards</h3>
+
+  <div class="form-group">
+    <label for="eleveAbsence">Sélectionner un élève</label>
+    <select id="eleveAbsence">
+      <option value="">Choisir un élève</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="dateAbsence">Date</label>
+    <input type="date" id="dateAbsence">
+  </div>
+
+  <div class="form-group">
+    <label for="typeAbsence">Type</label>
+    <select id="typeAbsence">
+      <option value="Absence">Absence</option>
+      <option value="Retard">Retard</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="dureeAbsence">Durée (heures)</label>
+    <input type="number" id="dureeAbsence"
+      min="0.25" step="0.25" placeholder="Exemple : 1">
+  </div>
+
+  <div class="form-group">
+    <label for="justificationAbsence">Justification</label>
+    <select id="justificationAbsence">
+      <option value="Non justifiée">Non justifiée</option>
+      <option value="Justifiée">Justifiée</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="motifAbsence">Motif / Observation</label>
+    <textarea id="motifAbsence" rows="3"
+      placeholder="Ajouter une observation..."></textarea>
+  </div>
+
+  <button class="btn" id="ajouterAbsence">
+    Enregistrer
+  </button>
+
+  <h4>Historique des absences et retards</h4>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Élève</th>
+        <th>Type</th>
+        <th>Durée</th>
+        <th>Justification</th>
+        <th>Observation</th>
+      </tr>
+    </thead>
+    <tbody id="listeAbsences"></tbody>
+  </table>
+</div>
+
         <div class="module">
           <h3>📄 Bulletins</h3>
           <p>Préparer les bilans pédagogiques.</p>
