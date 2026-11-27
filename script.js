@@ -82,7 +82,22 @@ const observationsInput = document.getElementById("observationsEleve");
         return;
       }
 
-      eleves.push({ nom, prenom, classe });
+const dateNaissance = dateNaissanceInput.value;
+const parent = parentInput.value.trim();
+const telephone = telephoneInput.value.trim();
+const adresse = adresseInput.value.trim();
+const observations = observationsInput.value.trim();
+
+eleves.push({
+  nom,
+  prenom,
+  classe,
+  dateNaissance,
+  parent,
+  telephone,
+  adresse,
+  observations
+});
 
       sauvegarderEleves();
 
